@@ -3,10 +3,10 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const organizationName: String = 'WeAreFrank';
-const projectName: String = '{{ cookiecutter.instance_name_lc }}';
+const projectName: String = 'demo';
 
 const config: Config = {
-  title: '{{ cookiecutter.instance_name }}',
+  title: 'Demo',
   tagline: '',
   favicon: 'img/waf-logo-favicon-16x16.png',
 
@@ -55,7 +55,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/waf-logo-192x192.png',
     navbar: {
-      title: '{{ cookiecutter.instance_name }}',
+      title: 'Demo',
       logo: {
         alt: 'WeAreFrank',
         src: 'img/waf-logo-192x192.png',

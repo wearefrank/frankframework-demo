@@ -1,8 +1,8 @@
 {
     "mappings": {
-        "{{ cookiecutter.instance_name }}": "",
-        "{{ cookiecutter.instance_name_lc }}": "",
-        "{{ cookiecutter.configuration_name }}": ""
+        "{{ cookiecutter.instance_name }}": "Demo",
+        "{{ cookiecutter.instance_name_lc }}": "demo",
+        "{{ cookiecutter.configuration_name }}": "main"
     },
     "ignoredFiles": [
         "skeletonrc.json",

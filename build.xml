@@ -1,5 +1,5 @@
-<project default="restart-{{ cookiecutter.instance_name }}">
-    <target name="restart-{{ cookiecutter.instance_name }}">
+<project default="restart-Demo">
+    <target name="restart-Demo">
         <basename property="project.dir" file="${basedir}"/>
         <condition property="exe" value="../frank-runner/restart.bat" else="/bin/bash">
             <os family="windows"/>
