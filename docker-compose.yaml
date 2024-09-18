@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frank:
     build: .
-    image: wearefrank/demo:${VERSION:-latest}
+    image: ghcr.io/wearefrank/demo:${VERSION:-latest}
     ports:
       - "${PORT:-8080}:8080"
     environment:
