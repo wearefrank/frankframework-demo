@@ -1,0 +1,93 @@
+<Configuration
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../FrankConfig.xsd"
+	xmlns:flow="urn:frank-flow"
+	flow:gridSize="50"
+	>
+	<Adapter name="Update temperature" >
+		<Receiver name="Update temperature" flow:y="100" flow:x="100">
+			<JavaListener name="Update temperature" serviceName="UpdateTemperature" />
+		</Receiver>
+		<Receiver name="ApiListenerReceiver" flow:y="250" flow:x="100">
+			<ApiListener name="ApiListener" uriPattern="temp" />
+		</Receiver>
+		<Pipeline>
+			<Exits>
+				<Exit name="READY" state="SUCCESS" flow:y="850" flow:x="850" />
+				<Exit name="InternalServerError" state="ERROR" code="500" flow:y="400" flow:x="1150" />
+			</Exits>
+			<SenderPipe
+				name="Get temperature from OpenWeather"
+				flow:y="100"
+				flow:x="450"
+
+				>
+				<HttpSender url="http://api.openweathermap.org/data/2.5/weather">
+					<Param name="q" sessionKey="q" defaultValue="Amsterdam" />
+					<Param name="units" value="metric" />
+					<Param name="mode" value="xml" />
+					<Param name="appid" authAlias="openweathermap" pattern="{password}" hidden="true" />
+				</HttpSender>
+			</SenderPipe>
+			<XsltPipe
+				name="Indent XML"
+				styleSheetName="Indent.xsl"
+				flow:y="250"
+				flow:x="450"
+			/>
+			<XmlSwitchPipe
+				name="Temperature present?"
+				xpathExpression="string-length(/current/temperature/@value) > 0"
+				flow:y="400"
+				flow:x="450"
+				>
+				<Forward name="true" path="Xml to Json" />
+				<Forward name="false" path="Return error message" />
+			</XmlSwitchPipe>
+			<EchoPipe
+				name="Return error message"
+				getInputFromFixedValue="Temperature not found in response of api.openweathermap.org"
+				flow:y="400"
+				flow:x="800"
+				>
+				<Forward name="success" path="InternalServerError" />
+			</EchoPipe>
+			<XsltPipe
+				name="Xml to Json"
+				xpathExpression="concat('{&quot;temperature&quot;:', /current/temperature/@value, '}')"
+				storeResultInSessionKey="temp"
+				flow:y="550"
+				flow:x="450"
+			/>
+			<SenderPipe
+				name="Post temperature to ThingsBoard"
+				flow:y="700"
+				flow:x="450"
+				>
+				<HttpSender
+					methodType="POST"
+					contentType="application/json"
+					>
+					<Param name="url" authAlias="thingsboard" pattern="https://demo.thingsboard.io/api/v1/{password}/telemetry" hidden="true" />
+				</HttpSender>
+			</SenderPipe>
+			<ReplacerPipe
+				name="Return success message"
+				getInputFromFixedValue="ThingsBoard updated with ?{temp}"
+				substituteVars="true"
+				flow:y="850"
+				flow:x="450"
+				>
+				<Param name="temp" sessionKey="temp" />
+			</ReplacerPipe>
+		</Pipeline>
+	</Adapter>
+	<Scheduler>
+		<Job
+			name="Update temperature"
+			function="sendMessage"
+			javaListener="Update temperature"
+			interval="60000"
+		/>
+	</Scheduler>
+</Configuration>
