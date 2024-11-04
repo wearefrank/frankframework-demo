@@ -1,12 +1,10 @@
-ARG FF_VERSION=8.3.0-SNAPSHOT
-
 FROM maven:3 AS maven-build
 
 COPY pom.xml .
 
 RUN mvn install
 
-FROM frankframework/frankframework:${FF_VERSION}
+FROM frankframework/frankframework:8.3.1-20241103.001631
 
 COPY --from=maven-build target/dependency /usr/local/tomcat/webapps/frank-flow/
 
