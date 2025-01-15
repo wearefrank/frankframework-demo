@@ -15,5 +15,6 @@ services:
       - .env
     volumes:
       - ${SECRETS_PATH:-./src/main/secrets}:/opt/frank/secrets
+      - ./local-resources.yml:/opt/frank/resources/resources.yml
     restart: unless-stopped
 
