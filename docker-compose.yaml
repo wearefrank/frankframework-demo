@@ -7,14 +7,10 @@ services:
     ports:
       - "${PORT:-8080}:8080"
     environment:
-      application.server.type.custom: ${TRANSACTION_MANAGER:-NARAYANA}
-      credentialFactory.class: nl.nn.credentialprovider.PropertyFileCredentialFactory
-      credentialFactory.map.properties: /opt/frank/secrets/credentials.properties
       TZ: ${TIME_ZONE:-Europe/Amsterdam}
     env_file:
       - .env
     volumes:
       - ${SECRETS_PATH:-./src/main/secrets}:/opt/frank/secrets
-      - ./local-resources.yml:/opt/frank/resources/resources.yml
     restart: unless-stopped
 
