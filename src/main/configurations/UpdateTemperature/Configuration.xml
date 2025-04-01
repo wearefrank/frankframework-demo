@@ -4,12 +4,12 @@
 	xmlns:flow="urn:frank-flow"
 	flow:gridSize="50"
 	>
-	<Adapter name="Update temperature" >
+	<Adapter name="Update temperature">
 		<Receiver name="Update temperature" flow:y="100" flow:x="100">
 			<JavaListener name="Update temperature" serviceName="UpdateTemperature" />
 		</Receiver>
 		<Receiver name="ApiListenerReceiver" flow:y="250" flow:x="100">
-			<ApiListener name="ApiListener" uriPattern="temp" />
+			<ApiListener name="ApiListener" uriPattern="temp" allowedParameters="q" />
 		</Receiver>
 		<Pipeline>
 			<Exits>
