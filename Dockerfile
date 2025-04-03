@@ -4,7 +4,7 @@ COPY pom.xml .
 
 RUN mvn install
 
-FROM frankframework/frankframework:9.1.0-20250328.042332
+FROM frankframework/frankframework:9.1.0-20250402.232900
 
 COPY --from=maven-build target/dependency /usr/local/tomcat/webapps/frank-flow/
 
