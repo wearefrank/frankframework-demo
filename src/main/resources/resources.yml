@@ -1,4 +1,4 @@
 jdbc:
   - name: demo
     type: "org.h2.jdbcx.JdbcDataSource"
-    url: "jdbc:h2:mem:test;NON_KEYWORDS=VALUE;TRACE_LEVEL_FILE=0;" 
+    url: "jdbc:h2:mem:test;NON_KEYWORDS=VALUE;TRACE_LEVEL_FILE=0;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE" 
