@@ -42,6 +42,12 @@ jobs:
       - name: Write thingsboard/password
         working-directory: src/main/secrets
         run: echo "thingsboard/password=dummy" >> credentials.properties
+      - name: Upload dummy credentials.properties to have healthy configuration during test
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 #4.6.0
+        with:
+          name: pre-build-credentials-properties
+          path: ./*/main/secrets/credentials.properties
+          retention-days: 1
 
   ci:
     uses: wearefrank/ci-cd-templates/.github/workflows/ci-generic.yml@692c637ef4f5519d986d69e443997ab80fed8deb #2.0.2
