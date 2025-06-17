@@ -29,31 +29,10 @@ jobs:
         id: reference
         uses: wearefrank/ci-cd-templates/next-reference@692c637ef4f5519d986d69e443997ab80fed8deb #2.0.2
 
-  dummy-credentials:
-    runs-on: ubuntu-latest
-    needs:
-      - version-next
-    steps:
-      - name: Create credentials directory
-        run: mkdir -p src/main/secrets
-      - name: Write openweathermap/password
-        working-directory: src/main/secrets
-        run: echo "openweathermap/password=dummy" > credentials.properties
-      - name: Write thingsboard/password
-        working-directory: src/main/secrets
-        run: echo "thingsboard/password=dummy" >> credentials.properties
-      - name: Upload dummy credentials.properties to have healthy configuration during test
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 #4.6.0
-        with:
-          name: pre-build-credentials-properties
-          path: ./*/main/secrets/credentials.properties
-          retention-days: 1
-
   ci:
     uses: wearefrank/ci-cd-templates/.github/workflows/ci-generic.yml@692c637ef4f5519d986d69e443997ab80fed8deb #2.0.2
     needs:
       - version-next
-      - dummy-credentials
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
     with:
