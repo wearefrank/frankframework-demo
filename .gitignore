@@ -4,7 +4,11 @@ Test.properties
 /data/
 *.iml
 FrankConfig.xsd
-
-# .env should be made in the environment.
-# It is an additional file to StageSpecifics_LOC to keep it more generic.
+# Use this file to set custom values referenced in docker-compose.yml.
+# It allows developers to overwrite values in the built Docker image,
+# notably SECRETS_PATH. The Docker image holds dummy secrets for
+# testing purposes, while real credentials are needed to run
+# this project locally or in production.
 .env
+# Add your custom credentials here to hide them from accidential check-in
+custom-secrets
