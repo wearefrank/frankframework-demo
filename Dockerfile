@@ -4,7 +4,7 @@ COPY pom.xml .
 
 RUN mvn install
 
-FROM frankframework/frankframework:9.2.0-20250512.173626
+FROM frankframework/frankframework:9.2.0
 
 COPY --from=maven-build target/dependency /opt/frank/drivers/
 
