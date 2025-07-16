@@ -7,7 +7,6 @@ services:
     ports:
       - "${PORT:-8080}:8080"
     environment:
-      configurations.directory.autoLoad: true
       TZ: ${TIME_ZONE:-Europe/Amsterdam}
     env_file:
       - .env
