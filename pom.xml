@@ -31,25 +31,16 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.8.0</version>
                 <executions>
-<!--                    <execution>-->
-<!--                        <id>copy-dependencies</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-dependencies</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.build.directory}</outputDirectory>-->
-<!--                            <overWriteReleases>false</overWriteReleases>-->
-<!--                            <overWriteSnapshots>false</overWriteSnapshots>-->
-<!--                            <overWriteIfNewer>true</overWriteIfNewer>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
                     <execution>
-                        <id>unpack-war</id>
+                        <id>unpack-frank-flow</id>
                         <phase>package</phase>
                         <goals>
                             <goal>unpack-dependencies</goal>
                         </goals>
+                        <configuration>
+                            <includeArtifactIds>frank-flow</includeArtifactIds>
+                            <outputDirectory>${project.build.directory}/frank-flow-webapp</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
