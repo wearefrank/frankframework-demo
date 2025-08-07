@@ -6,7 +6,7 @@ RUN mvn install
 
 FROM frankframework/frankframework:9.3.0-20250806.042330
 
-COPY --from=maven-build target/dependency /opt/frank/drivers/
+COPY --from=maven-build target/frank-flow-webapp /usr/local/tomcat/webapps/frank-flow/
 
 # Copy Frank!
 COPY --chown=tomcat src/main/ /opt/frank/
