@@ -12,5 +12,6 @@ services:
       - .env
     volumes:
       - ${SECRETS_PATH:-./src/main/secrets}:/opt/frank/secrets
+      - ./src/test/testtool:/opt/frank/testtool
     restart: unless-stopped
 
