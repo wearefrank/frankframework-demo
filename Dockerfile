@@ -10,6 +10,7 @@ COPY --from=maven-build target/frank-flow-webapp /usr/local/tomcat/webapps/frank
 
 # Copy Frank!
 COPY --chown=tomcat src/main/ /opt/frank/
+COPY --chown=tomcat src/test/testtool /opt/frank/testtool
 
 HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=60 \
 	CMD curl --fail --silent http://localhost:8080/iaf/api/server/health || (curl --silent http://localhost:8080/iaf/api/server/health && exit 1)
