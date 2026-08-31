@@ -1,3 +1,4 @@
+ARG PG_VERSION=42.7.13
 FROM maven:3 AS maven-build
 
 COPY pom.xml .
@@ -5,12 +6,13 @@ COPY pom.xml .
 RUN mvn install
 
 FROM frankframework/frankframework:9.4.0-20251018.042331
+ARG PG_VERSION
 
 COPY --from=maven-build target/frank-flow-webapp /usr/local/tomcat/webapps/frank-flow/
 
 # Copy Frank!
 COPY --chown=tomcat src/main/ /opt/frank/
 COPY --chown=tomcat src/test/testtool /opt/frank/testtool
-
+ADD --chown=tomcat https://jdbc.postgresql.org/download/postgresql-${PG_VERSION}.jar /opt/frank/drivers/postgresql-${PG_VERSION}.jar
 HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=60 \
 	CMD curl --fail --silent http://localhost:8080/iaf/api/server/health || (curl --silent http://localhost:8080/iaf/api/server/health && exit 1)
