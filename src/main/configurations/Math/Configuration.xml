@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="../FrankConfig.xsd"
 	>
 	<Adapter name="Increase integer">
-		<Receiver name="Increase integer">
+		<Receiver name="Increase integer" processResultCacheSize="0">
 			<ApiListener uriPattern="increase/{integer}" allowAllParams="false"/>
 		</Receiver>
 		<Pipeline>
