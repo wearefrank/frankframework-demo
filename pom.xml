@@ -21,6 +21,17 @@
             <artifactId>frank-flow</artifactId>
             <version>[3,)</version>
             <type>war</type>
+            <exclusions>
+                <!--
+                Prevent CI/CD failure because of missing FF 8.2.0-20240611.042327. GitHub Actions 20260920:
+                #13 50.92 [ERROR] Failed to read artifact descriptor for org.frankframework:frank-flow:war:3.0.0-20240611.160433
+                #13 50.92 [ERROR] 	Caused by: The following artifacts could not be resolved: org.frankframework:frankframework-parent:pom:8.2.0-20240611.042327 (absent): Could not find artifact org.frankframework:frankframework-parent:pom:8.2.0-20240611.042327 in frankframework (https://nexus.frankframework.org/content/groups/public)
+                -->
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
