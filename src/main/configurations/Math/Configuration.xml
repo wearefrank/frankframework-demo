@@ -1,0 +1,16 @@
+<Configuration
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../FrankConfig.xsd"
+	>
+	<Adapter name="Increase integer">
+		<Receiver name="Increase integer">
+			<ApiListener uriPattern="increase/{integer}" allowAllParams="false"/>
+		</Receiver>
+		<Pipeline>
+			<IncreaseIntegerPipe name="Increase" sessionKey="integer">
+				<Param name="increment" value="1"/>
+			</IncreaseIntegerPipe>
+			<EchoPipe name="Return increased integer" getInputFromSessionKey="integer"/>
+		</Pipeline>
+	</Adapter>
+</Configuration>
