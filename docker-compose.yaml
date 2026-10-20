@@ -1,16 +1,38 @@
-version: '3.8'
-
 services:
-  frank:
-    build: .
+  frankframework:
     image: ghcr.io/wearefrank/frankframework-demo:${VERSION:-main}
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "${PORT:-8080}:8080"
+      - "8080:8080"
     environment:
       TZ: ${TIME_ZONE:-Europe/Amsterdam}
-    env_file:
-      - .env
+      # Enable CORS for local development.
+      cors.enforced: "true"
     volumes:
-      - ${SECRETS_PATH:-./src/main/secrets}:/opt/frank/secrets
-    restart: unless-stopped
-
+      - ./src/main/configurations/:/opt/frank/configurations/
+      - ./src/main/resources/:/opt/frank/resources/
+      - ./src/main/secrets/:/opt/frank/secrets/
+    develop:
+      watch:
+        - action: sync
+          initial_sync: true
+          path: ./src/main/configurations/
+          target: /opt/frank/configurations/
+        - action: sync+restart
+          initial_sync: true
+          path: ./src/main/resources
+          target: /opt/frank/resources
+        - action: sync+restart
+          initial_sync: true
+          path: ./src/main/secrets
+          target: /opt/frank/secrets
+  frank-flow:
+    image: frankframework/frank-flow:latest
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./src/main/configurations/:/opt/frank/configurations
+    environment:
+      configurations.directory: /opt/frank/configurations
