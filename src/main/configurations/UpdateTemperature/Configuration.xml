@@ -68,7 +68,7 @@
 					methodType="POST"
 					contentType="application/json"
 					>
-					<Param name="url" authAlias="thingsboard" pattern="https://demo.thingsboard.io/api/v1/{password}/telemetry" hidden="true" />
+					<Param name="url" authAlias="thingsboard" pattern="https://eu.thingsboard.cloud/api/v1/{password}/telemetry" hidden="true" />
 				</HttpSender>
 			</SenderPipe>
 			<ReplacerPipe
